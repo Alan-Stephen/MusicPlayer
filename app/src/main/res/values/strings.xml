@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MobileDevCW1</string>
+    <string name="songListBottomButton">Settings</string>
+    <string name="songCardButtonName">Play</string>
+    <string name="songPlayerText">::</string>
+    <string name="stopButtonName">stop</string>
+    <string name="pauseButtonName">pause</string>
+    <string name="resumeButtonName">resume</string>
+</resources>
