@@ -18,12 +18,15 @@
         android:theme="@style/Theme.MobileDevCW1"
         tools:targetApi="32">
         <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
             android:name=".SongPlayer"
             android:exported="false" />
 
         <service
             android:name=".MusicService"
-            android:enabled="true"></service>
+            android:enabled="true" />
 
         <activity
             android:name=".SongList"

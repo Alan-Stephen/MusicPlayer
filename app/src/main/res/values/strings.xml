@@ -6,4 +6,7 @@
     <string name="stopButtonName">stop</string>
     <string name="pauseButtonName">pause</string>
     <string name="resumeButtonName">resume</string>
+    <string name="settingsButtonName">Done</string>
+    <string name="settingsPlaybackSpeedHint">Playback Speed</string>
+
 </resources>

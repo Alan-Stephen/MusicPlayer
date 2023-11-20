@@ -31,20 +31,6 @@ import java.util.Objects;
 
 public class SongList extends AppCompatActivity {
     private final static String TAG = "COMP3018";
-    private MusicService.MusicBinder musicService;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG,"SERVICE BINDING CONNECTED");
-            musicService = (MusicService.MusicBinder) service;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Log.d(TAG,"SERVICE BINDING DISCONNECTED");
-            musicService = null;
-        }
-    };
     private ArrayList<String> getMusicNames() {
         String path = "sdcard/Music";
 
@@ -61,8 +47,7 @@ public class SongList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.bindService(new Intent(this, MusicService.class), serviceConnection,
-                Context.BIND_AUTO_CREATE);
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songsList);
 
 
@@ -71,20 +56,8 @@ public class SongList extends AppCompatActivity {
         Log.d("COMP3018", getMusicNames().toString());
     }
 
-    public void start(View view) {
-        Intent intent = new Intent(SongList.this, MusicService.class);
-        intent.putExtra("path","sdcard/Music/sonic.mp3");
-        startService(intent);
-        Log.d("COMP3018","START SERVICE");
+    public void toSettings(View view) {
+        Intent intent = new Intent(SongList.this,Settings.class);
+        startActivity(intent);
     }
-    public void stop(View view) {
-
-        musicService.pause();
-        Log.d("COMP3018","Paused");
-    }
-    public void resume(View view){
-        musicService.resume();
-    }
-
-
 }
