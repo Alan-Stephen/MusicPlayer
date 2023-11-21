@@ -9,18 +9,52 @@
     tools:context=".Settings">
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/playbackSpeed"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="81dp"
         android:autofillHints="@string/settingsPlaybackSpeedHint"
         android:ems="10"
         android:hint="@string/settingsPlaybackSpeedHint"
         android:inputType="numberDecimal" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="@string/backGroundColourLabelName"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:autofillHints="@string/redTextHint"
+        android:ems="10"
+        android:hint="@string/redTextHint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editTextNumber2"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:autofillHints="@string/redTextHint"
+        android:ems="10"
+        android:hint="@string/greenTextHint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editTextNumber3"
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:autofillHints="@string/redTextHint"
+        android:ems="10"
+        android:hint="@string/blueTextHint"
+        android:inputType="number" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         android:onClick="done"
         android:text="@string/settingsButtonName" />
 

@@ -1,6 +1,8 @@
 package com.example.mobiledevcw1;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +26,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,33 +35,29 @@ import java.util.Objects;
 
 public class SongList extends AppCompatActivity {
     private final static String TAG = "COMP3018";
-    private ArrayList<String> getMusicNames() {
-        String path = "sdcard/Music";
+    private SongListViewModel viewModel;
 
-        File dir = new File(path);
-
-        String[] files = dir.list();
-
-        return new ArrayList<>(Arrays.asList(files));
-    }
+    private ActivityResultLauncher<Void> activityResultLauncher =
+            registerForActivityResult(new SetttingsResultContract(), result -> {
+                if(result != null) {
+                    viewModel._playbackSpeed = result;
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        viewModel = new ViewModelProvider(this).get(SongListViewModel.class);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songsList);
 
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new SongCardRecylclerViewAdapter(this,getMusicNames()));
-        Log.d("COMP3018", getMusicNames().toString());
+        recyclerView.setAdapter(new SongCardRecylclerViewAdapter(this,viewModel.getMusicNames(),viewModel));
+        Log.d("COMP3018", viewModel.getMusicNames().toString());
     }
 
     public void toSettings(View view) {
-        Intent intent = new Intent(SongList.this,Settings.class);
-        startActivity(intent);
+        activityResultLauncher.launch(null);
     }
 }

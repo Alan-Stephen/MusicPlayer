@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,11 +19,13 @@ public class SongCardRecylclerViewAdapter extends RecyclerView.Adapter<SongCardR
     private List<String> data;
     private Context context;
     private LayoutInflater layoutInflater;
+    private SongListViewModel _viewModel;
 
-    public SongCardRecylclerViewAdapter(Context context, List<String> data) {
+    public SongCardRecylclerViewAdapter(Context context, List<String> data, SongListViewModel viewModel) {
         this.data = data;
         this.context = context;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        _viewModel = viewModel;
     }
     @NonNull
     @Override
@@ -52,6 +55,7 @@ public class SongCardRecylclerViewAdapter extends RecyclerView.Adapter<SongCardR
             button.setOnClickListener(v -> {
                 Intent intent = new Intent(context,SongPlayer.class);
                 intent.putExtra("music",text.getText().toString());
+                intent.putExtra("playbackSpeed", _viewModel._playbackSpeed);
 
                 context.startActivity(intent);
             });

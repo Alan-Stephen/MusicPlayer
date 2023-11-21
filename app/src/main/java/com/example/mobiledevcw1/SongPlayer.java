@@ -48,6 +48,7 @@ public class SongPlayer extends AppCompatActivity {
     private final static String TAG="COMP3018";
     private TextView totalDuration;
     private TextView currentDuration;
+    private TextView playbackSpeed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +72,17 @@ public class SongPlayer extends AppCompatActivity {
 
         totalDuration = (TextView) findViewById(R.id.totalPlayback2);
         currentDuration = (TextView) findViewById(R.id.currentPlayback);
+        playbackSpeed = (TextView) findViewById(R.id.playbackSpeedText);
+
+        playbackSpeed.setText(Float.toString(getIntent().getFloatExtra("playbackSpeed",1.0F)));
         this.bindService(new Intent(this, MusicService.class), serviceConnection,
                 Context.BIND_AUTO_CREATE);
     }
 
     public void resume(View view) {
-       musicService.resume();
+        musicService.resume();
     }
+
     public void pause(View view) {
        musicService.pause();
     }

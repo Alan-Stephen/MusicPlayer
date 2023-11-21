@@ -1,89 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/align"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignWithParentIfMissing="false"
     android:orientation="vertical"
     tools:context=".SongPlayer">
 
-    <TextView
-        android:id="@+id/currentPlayback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="100dp"
-        android:height="100dp"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textMiddle"
-        app:layout_constraintTop_toTopOf="@+id/textMiddle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="55">
+
+        <TextView
+            android:id="@+id/totalPlayback2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:width="100dp"
+            android:height="100dp"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textMiddle"
+            app:layout_constraintTop_toTopOf="@+id/textMiddle" />
+
+        <TextView
+            android:id="@+id/textMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="100dp"
+            android:height="100dp"
+            android:text="@string/songPlayerText"
+            android:textAlignment="center"
+            android:textSize="70sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalPlayback2"
+            app:layout_constraintStart_toEndOf="@+id/currentPlayback"
+            app:layout_constraintTop_toTopOf="@+id/currentPlayback" />
+
+        <TextView
+            android:id="@+id/currentPlayback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="100dp"
+            android:height="100dp"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/textMiddle"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="55">
+
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:width="100dp"
+            android:height="100dp"
+            android:onClick="pause"
+            android:text="@string/pauseButtonName"
+            app:layout_constraintEnd_toStartOf="@+id/stopButton"
+            app:layout_constraintStart_toEndOf="@+id/resumeButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/resumeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:width="100dp"
+            android:height="100dp"
+            android:onClick="resume"
+            android:text="@string/resumeButtonName"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pauseButton"
+            app:layout_constraintEnd_toStartOf="@+id/pauseButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="100dp"
+            android:height="100dp"
+            android:onClick="stop"
+            android:text="@string/stopButtonName"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pauseButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pauseButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textMiddle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:width="100dp"
-        android:height="100dp"
-        android:text="@string/songPlayerText"
+        android:id="@+id/textView"
+        android:layout_width="130dp"
+        android:layout_height="55dp"
+        android:text="@string/playBackSpeedLabelText"
         android:textAlignment="center"
-        android:textSize="50sp"
-        app:layout_constraintEnd_toStartOf="@+id/currentPlayback"
-        app:layout_constraintStart_toEndOf="@+id/totalPlayback2"
-        app:layout_constraintTop_toTopOf="@+id/totalPlayback2" />
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/totalPlayback2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:width="100dp"
-        android:height="100dp"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/textMiddle"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/playbackSpeedText"
+        android:layout_width="132dp"
+        android:layout_height="78dp"
+        android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="100dp"
-        android:height="100dp"
-        android:onClick="stop"
-        android:text="@string/stopButtonName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/resumeButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/resumeButton" />
-
-    <Button
-        android:id="@+id/resumeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="1dp"
-        android:width="100dp"
-        android:height="100dp"
-        android:onClick="resume"
-        android:text="@string/resumeButtonName"
-        app:layout_constraintEnd_toStartOf="@+id/stopButton"
-        app:layout_constraintStart_toEndOf="@+id/pauseButton"
-        app:layout_constraintTop_toBottomOf="@+id/textMiddle" />
-
-    <Button
-        android:id="@+id/pauseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="100dp"
-        android:height="100dp"
-        android:onClick="pause"
-        android:text="@string/pauseButtonName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/resumeButton"
-        app:layout_constraintEnd_toStartOf="@+id/resumeButton"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
