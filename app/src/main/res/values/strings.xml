@@ -9,8 +9,8 @@
     <string name="settingsButtonName">Done</string>
     <string name="settingsPlaybackSpeedHint">Playback Speed</string>
     <string name="playBackSpeedLabelText">Playback Speed</string>
-    <string name="redTextHint">Red Value</string>
-    <string name="blueTextHint">Blue Value</string>
-    <string name="greenTextHint">Green Value</string>
+    <string name="redButtonText">Red</string>
+    <string name="blueButtonText">Blue</string>
+    <string name="whiteButtonText">white</string>
     <string name="backGroundColourLabelName">Background Colour</string>
 </resources>

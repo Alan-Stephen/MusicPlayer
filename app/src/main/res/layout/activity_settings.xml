@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:onClick="done"
@@ -15,7 +17,8 @@
         android:autofillHints="@string/settingsPlaybackSpeedHint"
         android:ems="10"
         android:hint="@string/settingsPlaybackSpeedHint"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+         />
 
     <TextView
         android:id="@+id/textView2"
@@ -24,32 +27,26 @@
         android:text="@string/backGroundColourLabelName"
         android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/editTextNumber"
+    <Button
+        android:id="@+id/redButton"
         android:layout_width="match_parent"
-        android:layout_height="81dp"
-        android:autofillHints="@string/redTextHint"
-        android:ems="10"
-        android:hint="@string/redTextHint"
-        android:inputType="number" />
+        android:layout_height="wrap_content"
+        android:onClick="changeToRed"
+        android:text="@string/redButtonText" />
 
-    <EditText
-        android:id="@+id/editTextNumber2"
+    <Button
+        android:id="@+id/blueButton"
         android:layout_width="match_parent"
-        android:layout_height="94dp"
-        android:autofillHints="@string/redTextHint"
-        android:ems="10"
-        android:hint="@string/greenTextHint"
-        android:inputType="number" />
+        android:layout_height="wrap_content"
+        android:onClick="changeToBlue"
+        android:text="@string/blueButtonText" />
 
-    <EditText
-        android:id="@+id/editTextNumber3"
+    <Button
+        android:id="@+id/whiteButton"
         android:layout_width="match_parent"
-        android:layout_height="103dp"
-        android:autofillHints="@string/redTextHint"
-        android:ems="10"
-        android:hint="@string/blueTextHint"
-        android:inputType="number" />
+        android:layout_height="wrap_content"
+        android:onClick="changeToWhite"
+        android:text="@string/whiteButtonText" />
 
     <Button
         android:id="@+id/button"
@@ -59,3 +56,4 @@
         android:text="@string/settingsButtonName" />
 
 </LinearLayout>
+</layout>

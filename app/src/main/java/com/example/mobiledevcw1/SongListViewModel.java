@@ -6,10 +6,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class SongListViewModel extends ViewModel {
-    float _playbackSpeed = 1;
-    String _backgroundColor;
+    private float _playbackSpeed = 1;
+    private BgColour _bgColour = BgColour.WHITE;
+    private ArrayList<String> _musicNames;
 
-    ArrayList<String> _musicNames;
+    // parse sdcard/Music for files ending with .mp3
     public ArrayList<String> getMusicNames() {
         if(_musicNames != null) {
             return _musicNames;
@@ -28,5 +29,21 @@ public class SongListViewModel extends ViewModel {
             return musicNames;
         }
         return musicNames;
+    }
+
+    public float getPlaybackSpeed() {
+        return _playbackSpeed;
+    }
+
+    public void setPlaybackSpeed(float _playbackSpeed) {
+        this._playbackSpeed = _playbackSpeed;
+    }
+
+    public BgColour getBgColour() {
+        return _bgColour;
+    }
+
+    public void setBgColour(BgColour _bgColour) {
+        this._bgColour = _bgColour;
     }
 }

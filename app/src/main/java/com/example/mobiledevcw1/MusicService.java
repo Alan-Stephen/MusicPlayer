@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
 
+// Service which plays music in foreground
 public class MusicService extends Service {
     private final String TAG = "COMP3018";
     private static MyMP3 player;
@@ -21,27 +21,20 @@ public class MusicService extends Service {
     private static final String CHANNEL_ID = "MusicChannel";
     private IBinder binder = new MusicBinder();
 
+    // binder to make music service methods accessible
     public class MusicBinder extends Binder {
         public void pause() {
             player.pause();
         }
-
         public void resume() {
             player.play();
         }
-
-        public void setSong(String song) {
-            player.setSongToPlay(song);
-        }
-
         public void setPlayback(float playbackSpeed) {
             player.setPlaybackSpeed(playbackSpeed);
         }
-
         MutableLiveData<Integer> getCurrentPlayback() {
-            return player.getCurrentPlayBack();
+            return player.getRunningTime();
         }
-
         int getDuration() {
             return player.getDuration();
         }
@@ -50,7 +43,7 @@ public class MusicService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG,"BINDER");
+        Log.d(TAG,"RETURNING BINDER");
         return binder;
     }
 
@@ -61,7 +54,7 @@ public class MusicService extends Service {
         createNotificationChannel();
         super.onCreate();
 
-        Log.d(TAG,"CREATE SERVICE");
+        Log.d(TAG,"CREATING MUSIC SERVICE");
     }
 
     private void createNotificationChannel() {
@@ -81,7 +74,7 @@ public class MusicService extends Service {
             player.stop();
 
         String path = intent.getStringExtra("path");
-        Log.d(TAG,"STARTING SERVICE, CREATING NOTI");
+        Log.d(TAG,"STARTING TO PLAY MUSIC");
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Playing Music")
                 .setContentText( "Playing: " + path)
@@ -94,16 +87,16 @@ public class MusicService extends Service {
         player.setSongToPlay(path);
         player.setPlaybackSpeed(playbackSpeed);
         player.start();
-        if(player.getState() == MP3Player.MP3PlayerState.ERROR)
-            Log.d(TAG,"ERROR LERROR");
-        player.play();
+
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy(){
+
+        // make sure that the current run time updating loop is stopped.
         player.stop();
         super.onDestroy();
-        Log.d(TAG,"destroying");
+        Log.d(TAG,"STOPPING MUSIC SERVICE");
     }
 }

@@ -6,41 +6,38 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CursorAdapter;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.FilenameFilter;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.LinearLayout;
 
 public class SongList extends AppCompatActivity {
     private final static String TAG = "COMP3018";
     private SongListViewModel viewModel;
 
-    private ActivityResultLauncher<Void> activityResultLauncher =
+    // for launching settings activity.
+    private ActivityResultLauncher<TransferInfo> settingsResultLauncher =
             registerForActivityResult(new SetttingsResultContract(), result -> {
                 if(result != null) {
-                    viewModel._playbackSpeed = result;
+                    viewModel.setBgColour(result._bgColour);
+                    viewModel.setPlaybackSpeed(result._playbackSpeed);
+
+                    // update bg colour.
+                    ((LinearLayout) findViewById(R.id.songsListLayout))
+                            .setBackgroundColor(Color.parseColor(SettingsViewModel.BGColourToString(viewModel.getBgColour())));
+                }
+            });
+
+    private ActivityResultLauncher<PlayerInitInfo> playerResultLauncher =
+            registerForActivityResult(new SongPlayerResultsContract(), result -> {
+                if (result != null) {
+                    viewModel.setBgColour(result._bgColour);
+                    viewModel.setPlaybackSpeed(result._playbackSpeed);
+
+                    ((LinearLayout) findViewById(R.id.songsListLayout))
+                            .setBackgroundColor(Color.parseColor(SettingsViewModel.BGColourToString(viewModel.getBgColour())));
                 }
             });
 
@@ -52,12 +49,19 @@ public class SongList extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(SongListViewModel.class);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songsList);
 
+        // set up intial bg colour.
+        ((LinearLayout) findViewById(R.id.songsListLayout))
+                .setBackgroundColor(Color.parseColor(SettingsViewModel.BGColourToString(viewModel.getBgColour())));
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new SongCardRecylclerViewAdapter(this,viewModel.getMusicNames(),viewModel));
+        recyclerView.setAdapter(new SongCardRecylclerViewAdapter(this,
+                viewModel.getMusicNames(),viewModel,playerResultLauncher));
         Log.d("COMP3018", viewModel.getMusicNames().toString());
+
     }
 
     public void toSettings(View view) {
-        activityResultLauncher.launch(null);
+        //  handle the onClick for "settings" button.
+        settingsResultLauncher.launch(new TransferInfo(viewModel.getBgColour(),viewModel.getPlaybackSpeed()));
     }
 }

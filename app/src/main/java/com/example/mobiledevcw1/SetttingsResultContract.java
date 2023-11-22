@@ -9,19 +9,24 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class SetttingsResultContract extends ActivityResultContract<Void,Float> {
+// contract for recieving the results from changing settings from Settings Activity.
+public class SetttingsResultContract extends ActivityResultContract<TransferInfo,TransferInfo> {
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, Void unused) {
-        return new Intent(context,Settings.class);
+    public Intent createIntent(@NonNull Context context, TransferInfo info) {
+        Intent intent = new Intent(context,Settings.class);
+        intent.putExtra("playbackSpeed",info._playbackSpeed);
+        intent.putExtra("bgColour",info._bgColour.ordinal());
+        return intent;
     }
 
     @Override
-    public Float parseResult(int i, @Nullable Intent intent) {
-        Float playbackSpeed = null;
+    public TransferInfo parseResult(int i, @Nullable Intent intent) {
+        TransferInfo info = new TransferInfo(BgColour.WHITE,1.0F);
         if(i == Activity.RESULT_OK && intent != null) {
-            return intent.getFloatExtra("playbackSpeed",1.0F);
+            info._bgColour = BgColour.values()[intent.getIntExtra("bgColour",0)];
+            info._playbackSpeed = intent.getFloatExtra("playbackSpeed",1.0F);
         }
-        return playbackSpeed;
+        return info;
     }
 }
