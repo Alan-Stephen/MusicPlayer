@@ -83,7 +83,13 @@ public class SongPlayer extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-               stop(null);
+                Intent intent = new Intent();
+                Float playbackSpeed = viewModel.getPlaybackSpeed();
+                intent.putExtra("bgColour", viewModel.getBgColour().ordinal());
+                intent.putExtra("playbackSpeed",playbackSpeed);
+                setResult(Activity.RESULT_OK,intent);
+
+                finish();
             }
         });
         totalDuration = (TextView) findViewById(R.id.totalPlayback2);
@@ -111,6 +117,8 @@ public class SongPlayer extends AppCompatActivity {
     }
 
     public void stop(View view) {
+
+        // create intent to send back info to SongList
        Log.d(TAG,"STOPING");
        Intent intent = new Intent();
        Float playbackSpeed = viewModel.getPlaybackSpeed();
@@ -118,6 +126,8 @@ public class SongPlayer extends AppCompatActivity {
        intent.putExtra("playbackSpeed",playbackSpeed);
        setResult(Activity.RESULT_OK,intent);
 
+
+       // intent for service stopping
        Intent  stopIntent = new Intent(SongPlayer.this,MusicService.class);
        stopService(stopIntent);
         if(serviceConnection!=null) {

@@ -1,5 +1,6 @@
 package com.example.mobiledevcw1;
 
+// info to be passed onto player by SongList activity.
 public class PlayerInitInfo {
     private float _playbackSpeed;
     private BgColour _bgColour;

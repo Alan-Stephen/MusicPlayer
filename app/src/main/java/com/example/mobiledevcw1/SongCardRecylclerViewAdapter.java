@@ -27,6 +27,7 @@ public class SongCardRecylclerViewAdapter extends RecyclerView.Adapter<SongCardR
     private SongListViewModel _viewModel;
     private ActivityResultLauncher<PlayerInitInfo> _launcher;
 
+    // takes in launcher for SongPlayer so that we can bind launcher.launch to button
     public SongCardRecylclerViewAdapter(Context context, List<String> data, SongListViewModel viewModel,
                                         ActivityResultLauncher<PlayerInitInfo> launcher) {
         this._data = data;

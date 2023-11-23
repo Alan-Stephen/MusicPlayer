@@ -1,7 +1,6 @@
 package com.example.mobiledevcw1;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
@@ -20,31 +19,29 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.mobiledevcw1.databinding.ActivitySettingsBinding;
-
 
 public class Settings extends AppCompatActivity {
-    EditText playbackSpeedInput;
+    EditText _playbackSpeedInput;
     SettingsViewModel viewModel;
 
     private static final String TAG="COMP3018";
 
-    private MusicService.MusicBinder musicService;
-    private boolean isServiceBound;
+    private MusicService.MusicBinder _musicService;
+    private boolean _isServiceBound;
 
-    ServiceConnection serviceConnection = new ServiceConnection() {
+    ServiceConnection _serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "SERVICE BINDING CONNECTED");
-            musicService = (MusicService.MusicBinder) service;
-            isServiceBound = true;
+            _musicService = (MusicService.MusicBinder) service;
+            _isServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             Log.d(TAG, "SERVICE BINDING DISCONNECTED");
-            musicService = null;
-            isServiceBound = false;
+            _musicService = null;
+            _isServiceBound = false;
         }
     };
 
@@ -71,7 +68,7 @@ public class Settings extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
-        playbackSpeedInput = (EditText) findViewById(R.id.playbackSpeed);
+        _playbackSpeedInput = (EditText) findViewById(R.id.playbackSpeed);
 
         if(viewModel.isJustOpened()) {
             viewModel.setPlaybackSpeed(getIntent().getFloatExtra("playbackSpeed", 1.0F));
@@ -79,13 +76,13 @@ public class Settings extends AppCompatActivity {
             viewModel.setJustOpened(false);
         }
         // set up intial values of playbackSpeed and background colour
-        playbackSpeedInput.setText(Float.toString(viewModel.getPlaybackSpeed()));
+        _playbackSpeedInput.setText(Float.toString(viewModel.getPlaybackSpeed()));
         ((LinearLayout) findViewById(R.id.settingsLayout))
                 .setBackgroundColor(Color.parseColor(viewModel.BGColourToString(viewModel.getBgColour())));
 
         // if service is running bind to service.
         if(isServiceRunning()) {
-            this.bindService(new Intent(this, MusicService.class), serviceConnection,
+            this.bindService(new Intent(this, MusicService.class), _serviceConnection,
                     Context.BIND_AUTO_CREATE);
         }
 
@@ -98,7 +95,7 @@ public class Settings extends AppCompatActivity {
             }
         });
         // update viewModel variable with text watcher
-        playbackSpeedInput.addTextChangedListener(new TextWatcher() {
+        _playbackSpeedInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
@@ -107,7 +104,7 @@ public class Settings extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 float value = 1.0F;
                 try {
-                    value = Float.parseFloat(playbackSpeedInput.getText().toString());
+                    value = Float.parseFloat(_playbackSpeedInput.getText().toString());
                 } catch (NumberFormatException ignored){
                 }
 
@@ -119,20 +116,20 @@ public class Settings extends AppCompatActivity {
     // sets results for songs lists activity to recieve.
     public void setResults() {
         Intent intent = new Intent();
-        Float playbackSpeed = Float.parseFloat(playbackSpeedInput.getText().toString());
+        Float playbackSpeed = viewModel._playbackSpeed;
         intent.putExtra("bgColour", viewModel.getBgColour().ordinal());
         intent.putExtra("playbackSpeed",playbackSpeed);
         setResult(Activity.RESULT_OK,intent);
 
 
         // set playback speed dynamically.
-        if(isServiceRunning() && musicService != null) {
-            musicService.setPlayback(viewModel.getPlaybackSpeed());
+        if(isServiceRunning() && _musicService != null) {
+            _musicService.setPlayback(viewModel.getPlaybackSpeed());
         }
 
-        if(isServiceBound) {
-            unbindService(serviceConnection);
-            serviceConnection = null;
+        if(_isServiceBound) {
+            unbindService(_serviceConnection);
+            _serviceConnection = null;
         }
     }
 

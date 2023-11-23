@@ -9,7 +9,8 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-// contract for recieving the results from changing settings from Settings Activity.
+// contract for recieving the results from changing settings from Settings Activity and to pass
+// background colour and playback info.
 public class SetttingsResultContract extends ActivityResultContract<TransferInfo,TransferInfo> {
     @NonNull
     @Override

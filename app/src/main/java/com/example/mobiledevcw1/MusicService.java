@@ -73,6 +73,7 @@ public class MusicService extends Service {
         if (player.getState() == MP3Player.MP3PlayerState.PLAYING)
             player.stop();
 
+        // get path of music to play from intent
         String path = intent.getStringExtra("path");
         Log.d(TAG,"STARTING TO PLAY MUSIC");
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -83,6 +84,7 @@ public class MusicService extends Service {
         startForeground(PLAYER_ID, notification);
 
 
+        // setup player options.
         Float playbackSpeed = intent.getFloatExtra("playbackSpeed",1.0F);
         player.setSongToPlay(path);
         player.setPlaybackSpeed(playbackSpeed);

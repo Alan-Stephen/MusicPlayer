@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel;
 import java.math.BigDecimal;
 
 public class SettingsViewModel extends ViewModel {
-    public MutableLiveData<BigDecimal> _playbackSpeed;
+    public float _playbackSpeed;
+
     private BgColour bgColour = BgColour.WHITE;
     private boolean _justOpened = true;
 
@@ -18,21 +19,17 @@ public class SettingsViewModel extends ViewModel {
         this._justOpened = justOpened;
     }
 
-    public MutableLiveData<BigDecimal> get_playbackSpeed(){
-        return _playbackSpeed;
-    }
     SettingsViewModel(){
         super();
-        _playbackSpeed = new MutableLiveData<>();
-        _playbackSpeed.setValue(BigDecimal.valueOf(1.0));
+        _playbackSpeed = 1.0F;
     }
 
     public void setPlaybackSpeed(float playbackSpeed) {
-        _playbackSpeed.setValue(BigDecimal.valueOf(playbackSpeed));
+        _playbackSpeed = playbackSpeed;
     }
 
     public float getPlaybackSpeed() {
-        return _playbackSpeed.getValue().floatValue();
+        return _playbackSpeed;
     }
 
     public BgColour getBgColour() {
